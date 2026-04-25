@@ -10,15 +10,9 @@ jobs:
           distribution: 'microsoft'
           java-version: '17'
 
-      # OBAT PENGUAT: Bikin ulang si jantung Gradle sebelum build
-      - name: Rebuild Gradle Wrapper
-        run: |
-          mkdir -p gradle/wrapper
-          gradle wrapper --gradle-version 8.4
-          chmod +x gradlew
-
+      # Kita pakai gradle sistem langsung, bypass gradlew yang rewel
       - name: Build Mod
-        run: ./gradlew build
+        run: gradle build
 
       - uses: actions/upload-artifact@v4
         with:
