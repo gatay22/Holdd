@@ -4,23 +4,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
       - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
           distribution: 'microsoft'
           java-version: '17'
 
-      - name: Fix Wrapper (Download Jar Otomatis)
+      - name: Install Gradle & Build (Jalur Ninja)
         run: |
-          mkdir -p gradle/wrapper
-          gradle wrapper --gradle-version 8.3
-
-      - name: Kasih Izin & Build
-        run: |
-          chmod +x gradlew
-          ./gradlew build
+          # Kita pakai gradle sistem, bukan ./gradlew
+          sudo apt-get update
+          sudo apt-get install -y gradle
+          gradle build
 
       - name: Upload Hasil Jadi
         uses: actions/upload-artifact@v4
