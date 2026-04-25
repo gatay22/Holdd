@@ -5,24 +5,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup Java 17
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4
         with:
           distribution: 'microsoft'
           java-version: '17'
 
-      - name: Force Generate Wrapper (Tanpa Gradlew)
+      # OBAT PENGUAT: Bikin ulang si jantung Gradle sebelum build
+      - name: Rebuild Gradle Wrapper
         run: |
-          # Kita pakai gradle asli milik sistem Ubuntu buat bikin kuncinya
+          mkdir -p gradle/wrapper
           gradle wrapper --gradle-version 8.4
           chmod +x gradlew
 
       - name: Build Mod
         run: ./gradlew build
 
-      - name: Upload Hasil Jadi
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: Mod-Astral-Hold
           path: build/libs/*.jar
